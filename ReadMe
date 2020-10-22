@@ -1,0 +1,67 @@
+
+
+
+This repo is used to backup and restore a database and collection in MongoDB
+
+1. Get your MongoDB Server connection details/credentials and replace the values in 
+`mongo_creds.sh` file with yoys.
+
+2. Supported operations:
+    1. mongo_bkup_restore.sh backup database <db_name>
+    2. mongo_bkup_restore.sh restore collection <db_name> <collection_name>
+    3. mongo_bkup_restore.sh restore database <db_name> 
+    4. mongo_bkup_restore.sh restore collection <db_name> <collection_name> <input bson file to restore from>
+
+
+3. Help:
+    $ ./mongo_bkup_restore.sh help
+        utility to perform backup and/or restore of mongo database or collection
+        Usage:
+             ./mongo_bkup_restore.sh <command> <type>...
+
+             Command:
+                backup
+                restore
+             Type:
+                database
+                collection
+invalid operation: help
+        utility to perform backup and/or restore of mongo database or collection
+        Usage:
+             ./mongo_bkup_restore.sh <command> <type>...
+
+             Command:
+                backup
+                restore
+             Type:
+                database
+                collection
+
+--------------------------------------------------------------------------------------
+# λ ~/workspace/mongo-db-learn/remove_duplicate_documents/ ./mongo_bkup_restore.sh backup collection people subs
+# Performing backup of people
+# --------------------------------------------
+# 2020-10-22T13:57:59.700-0500    writing people.subs to /Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/subs.bson
+# 2020-10-22T13:57:59.704-0500    done dumping people.subs (8 documents)
+# tar: Removing leading '/' from member names
+# a Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people
+# a Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/test.metadata.json
+# a Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/subs.bson
+# a Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/subs.metadata.json
+# a Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/test.bson
+# --------------------------------------------
+# collection:subs from db:people backup complete!
+# --------------------------------------------
+# λ ~/workspace/mongo-db-learn/remove_duplicate_documents/ ./mongo_bkup_restore.sh restore collection tmp_people subs people/subs.bson
+# creating a collection:tmp_people to: subs, from
+# --------------------------------------------------------------------
+# 2020-10-22T13:58:04.512-0500    checking for collection data in /Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/subs.bson
+# 2020-10-22T13:58:04.521-0500    reading metadata for tmp_people.subs from /Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/subs.metadata.json
+# 2020-10-22T13:58:04.532-0500    restoring tmp_people.subs from /Users/ramakrishnamannem/workspace/mongo-db-learn/remove_duplicate_documents/backups/collections/people/subs.bson
+# 2020-10-22T13:58:04.599-0500    no indexes to restore
+# 2020-10-22T13:58:04.599-0500    finished restoring tmp_people.subs (8 documents, 0 failures)
+# 2020-10-22T13:58:04.599-0500    8 document(s) restored successfully. 0 document(s) failed to restore.
+# --------------------------------------------
+# creating a new collection:subs in db:tmp_people complete!
+# --------------------------------------------
+# λ ~/workspace/mongo-db-learn/remove_duplicate_documents/
